@@ -69,7 +69,7 @@ function Deposit() {
           <>
             <p>Balance: {balance}</p>
             Deposit Amount<br />
-            <input type="input" required className="form-control" id="name" placeholder="Enter deposit amount" value={amount} onChange={e => handleChange(e, setAmount)} /><br />
+            <input type="input" required className="form-control" id="amount" placeholder="Enter deposit amount" value={amount} onChange={e => handleChange(e, setAmount)} /><br />
             <button type="submit" className="btn btn-light" disabled={submitDisabledValue.current} onClick={handleCreate}>Make Deposit</button>
           </>
         ) : (
