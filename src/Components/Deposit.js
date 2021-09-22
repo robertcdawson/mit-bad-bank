@@ -35,7 +35,6 @@ function Deposit() {
 
   React.useEffect(() => {
     ctx.users[ctx.users.length - 1].balance = balance
-    console.log("ctx.users", ctx.users);
   }, [amount, balance, ctx.users]);
 
   function canSubmit() {
@@ -47,6 +46,10 @@ function Deposit() {
   }
 
   function handleChange(e, setField) {
+    if (isNaN(e.currentTarget.value)) {
+      alert("Please enter a number");
+      return;
+    }
     setField(e.currentTarget.value);
     canSubmit();
   }
