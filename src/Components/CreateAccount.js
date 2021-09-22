@@ -4,13 +4,13 @@ import Card from './Card';
 import { UserContext } from './context';
 
 function CreateAccount() {
+  const ctx = React.useContext(UserContext);
   const [show, setShow] = React.useState(true);
   const [status, setStatus] = React.useState('');
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const submitDisabledValue = React.useRef('');
-  const ctx = React.useContext(UserContext);
 
   function validate(field, label) {
     if (!field || (label === 'password' && field.length < 8)) {
@@ -23,10 +23,23 @@ function CreateAccount() {
 
   function handleCreate() {
     console.log(name, email, password);
-    if (!validate(name, 'name')) return;
-    if (!validate(email, 'email')) return;
-    if (!validate(password, 'password')) return;
+    if (!validate(name, 'name')) {
+      alert('Enter name');
+      return;
+    }
+    if (!validate(email, 'email')) {
+      alert('Enter email');
+      return;
+    }
+    if (!validate(password, 'password')) {
+      alert('Enter password (at least 8 characters)');
+      return;
+    }
     submitDisabledValue.current = "";
+    // Delete initial placeholder user account
+    if (ctx.users[0].name === 'abel') {
+      ctx.users.length = 0;
+    }
     ctx.users.push({ name, email, password, balance: 100 });
     setShow(false);
   }
@@ -44,8 +57,6 @@ function CreateAccount() {
   function handleChange(e, setField) {
     setField(e.currentTarget.value);
     canSubmit();
-    console.log("e.currentTarget.value", e.currentTarget.value);
-    console.log("name", name);
   }
 
   function clearForm() {
@@ -63,11 +74,11 @@ function CreateAccount() {
       body={show ? (
         <>
           Name<br />
-          <input type="input" className="form-control" id="name" placeholder="Enter name" value={name} onChange={e => handleChange(e, setName)} /><br />
+          <input type="input" required className="form-control" id="name" placeholder="Enter name" value={name} onChange={e => handleChange(e, setName)} /><br />
           Email address<br />
-          <input type="input" className="form-control" id="email" placeholder="Enter email" value={email} onChange={e => handleChange(e, setEmail)} /><br />
+          <input type="input" required className="form-control" id="email" placeholder="Enter email" value={email} onChange={e => handleChange(e, setEmail)} /><br />
           Password<br />
-          <input type="password" className="form-control" id="password" placeholder="Enter password" value={password} onChange={e => handleChange(e, setPassword)} /><br />
+          <input type="password" required className="form-control" id="password" placeholder="Enter password" value={password} onChange={e => handleChange(e, setPassword)} /><br />
           <button type="submit" className="btn btn-light" disabled={submitDisabledValue.current} onClick={handleCreate}>Create Account</button>
         </>
       ) : (
