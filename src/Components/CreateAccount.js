@@ -9,10 +9,11 @@ function CreateAccount() {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const submitDisabledValue = React.useRef('');
   const ctx = React.useContext(UserContext);
 
   function validate(field, label) {
-    if (!field) {
+    if (!field || (label === 'password' && field.length < 8)) {
       setStatus('Error: ' + label);
       setTimeout(() => setStatus(''), 3000);
       return false;
@@ -25,8 +26,26 @@ function CreateAccount() {
     if (!validate(name, 'name')) return;
     if (!validate(email, 'email')) return;
     if (!validate(password, 'password')) return;
+    submitDisabledValue.current = "";
     ctx.users.push({ name, email, password, balance: 100 });
     setShow(false);
+  }
+
+  function canSubmit() {
+    if (!validate(name, 'name')
+      && !validate(email, 'email')
+      && !validate(password, 'password')) {
+      submitDisabledValue.current = "disabled";
+    } else {
+      submitDisabledValue.current = "";
+    }
+  }
+
+  function handleChange(e, setField) {
+    setField(e.currentTarget.value);
+    canSubmit();
+    console.log("e.currentTarget.value", e.currentTarget.value);
+    console.log("name", name);
   }
 
   function clearForm() {
@@ -44,12 +63,12 @@ function CreateAccount() {
       body={show ? (
         <>
           Name<br />
-          <input type="input" className="form-control" id="name" placeholder="Enter name" value={name} onChange={e => setName(e.currentTarget.value)} /><br />
+          <input type="input" className="form-control" id="name" placeholder="Enter name" value={name} onChange={e => handleChange(e, setName)} /><br />
           Email address<br />
-          <input type="input" className="form-control" id="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.currentTarget.value)} /><br />
+          <input type="input" className="form-control" id="email" placeholder="Enter email" value={email} onChange={e => handleChange(e, setEmail)} /><br />
           Password<br />
-          <input type="password" className="form-control" id="password" placeholder="Enter password" value={password} onChange={e => setPassword(e.currentTarget.value)} /><br />
-          <button type="submit" className="btn btn-light" onClick={handleCreate}>Create Account</button>
+          <input type="password" className="form-control" id="password" placeholder="Enter password" value={password} onChange={e => handleChange(e, setPassword)} /><br />
+          <button type="submit" className="btn btn-light" disabled={submitDisabledValue.current} onClick={handleCreate}>Create Account</button>
         </>
       ) : (
         <>
