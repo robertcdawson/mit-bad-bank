@@ -12,7 +12,7 @@ function Deposit() {
     ctx.users[ctx.users.length - 1]
     && ctx.users[ctx.users.length - 1].balance;
   const [balance, setBalance] = React.useState(currentUserBalance);
-  const submitDisabledValue = React.useRef('');
+  const submitDisabledValue = React.useRef('disabled');
 
   function validate(field, label) {
     if (!field) {
@@ -34,7 +34,10 @@ function Deposit() {
   }
 
   React.useEffect(() => {
-    ctx.users[ctx.users.length - 1].balance = balance
+    ctx.users[ctx.users.length - 1].balance = balance;
+    if (!amount) {
+      submitDisabledValue.current = "disabled";
+    }
   }, [amount, balance, ctx.users]);
 
   function canSubmit() {
@@ -49,6 +52,9 @@ function Deposit() {
     if (isNaN(e.currentTarget.value)) {
       alert("Please enter a number");
       return;
+    }
+    if (!e.currentTarget.value) {
+      submitDisabledValue.current = "disabled";
     }
     setField(e.currentTarget.value);
     canSubmit();

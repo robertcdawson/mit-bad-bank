@@ -22,7 +22,6 @@ function CreateAccount() {
   }
 
   function handleCreate() {
-    console.log(name, email, password);
     if (!validate(name, 'name')) {
       alert('Enter name');
       return;

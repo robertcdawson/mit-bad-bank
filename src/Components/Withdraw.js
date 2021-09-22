@@ -38,7 +38,10 @@ function Withdraw() {
   }
 
   React.useEffect(() => {
-    ctx.users[ctx.users.length - 1].balance = balance
+    ctx.users[ctx.users.length - 1].balance = balance;
+    if (!amount) {
+      submitDisabledValue.current = "disabled";
+    }
   }, [amount, balance, ctx.users]);
 
   function canSubmit() {
