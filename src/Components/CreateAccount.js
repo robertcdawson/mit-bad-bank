@@ -10,7 +10,15 @@ function CreateAccount() {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const submitDisabledValue = React.useRef('');
+  const [disabledValue, setDisabledValue] = React.useState("disabled");
+
+  React.useEffect(() => {
+    if (name !== "" && email !== "" && password !== "") {
+      setDisabledValue("");
+    } else {
+      setDisabledValue("disabled");
+    }
+  }, [name, email, password, ctx.users]);
 
   function validate(field, label) {
     if (!field || (label === 'password' && field.length < 8)) {
@@ -34,28 +42,17 @@ function CreateAccount() {
       alert('Enter password (at least 8 characters)');
       return;
     }
-    submitDisabledValue.current = "";
     // Delete initial placeholder user account
     if (ctx.users[0].name === 'abel') {
       ctx.users.length = 0;
     }
+    // Seed all new accounts with $100
     ctx.users.push({ name, email, password, balance: 100 });
     setShow(false);
   }
 
-  function canSubmit() {
-    if (!validate(name, 'name')
-      && !validate(email, 'email')
-      && !validate(password, 'password')) {
-      submitDisabledValue.current = "disabled";
-    } else {
-      submitDisabledValue.current = "";
-    }
-  }
-
   function handleChange(e, setField) {
     setField(e.currentTarget.value);
-    canSubmit();
   }
 
   function clearForm() {
@@ -78,7 +75,7 @@ function CreateAccount() {
           <input type="input" required className="form-control" id="email" placeholder="Enter email" value={email} onChange={e => handleChange(e, setEmail)} /><br />
           Password<br />
           <input type="password" required className="form-control" id="password" placeholder="Enter password" value={password} onChange={e => handleChange(e, setPassword)} /><br />
-          <button type="submit" className="btn btn-light" disabled={submitDisabledValue.current} onClick={handleCreate}>Create Account</button>
+          <button type="submit" className="btn btn-light" disabled={disabledValue} onClick={handleCreate}>Create Account</button>
         </>
       ) : (
         <>

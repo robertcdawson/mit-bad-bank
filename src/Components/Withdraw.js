@@ -12,7 +12,7 @@ function Withdraw() {
     ctx.users[ctx.users.length - 1]
     && ctx.users[ctx.users.length - 1].balance;
   const [balance, setBalance] = React.useState(currentUserBalance);
-  const submitDisabledValue = React.useRef('');
+  const [disabledValue, setDisabledValue] = React.useState("disabled");
 
   function validate(field, label) {
     if (!field) {
@@ -28,7 +28,6 @@ function Withdraw() {
       alert('Enter amount');
       return;
     }
-    submitDisabledValue.current = "";
     if (Number(amount) <= Number(balance)) {
       setBalance(Number(balance) - Number(amount));
       setShow(false);
@@ -39,18 +38,12 @@ function Withdraw() {
 
   React.useEffect(() => {
     ctx.users[ctx.users.length - 1].balance = balance;
-    if (!amount) {
-      submitDisabledValue.current = "disabled";
+    if (amount !== "") {
+      setDisabledValue("");
+    } else {
+      setDisabledValue("disabled");
     }
   }, [amount, balance, ctx.users]);
-
-  function canSubmit() {
-    if (!validate(amount, 'amount')) {
-      submitDisabledValue.current = "disabled";
-    } else {
-      submitDisabledValue.current = "";
-    }
-  }
 
   function handleChange(e, setField) {
     if (isNaN(e.currentTarget.value)) {
@@ -58,7 +51,6 @@ function Withdraw() {
       return;
     }
     setField(e.currentTarget.value);
-    canSubmit();
   }
 
   function clearForm() {
@@ -77,7 +69,7 @@ function Withdraw() {
             <p>Balance: {balance}</p>
             Withdraw Amount<br />
             <input type="input" required className="form-control" id="amount" placeholder="Enter withdrawal amount" value={amount} onChange={e => handleChange(e, setAmount)} /><br />
-            <button type="submit" className="btn btn-light" disabled={submitDisabledValue.current} onClick={handleCreate}>Make Withdrawal</button>
+            <button type="submit" className="btn btn-light" disabled={disabledValue} onClick={handleCreate}>Make Withdrawal</button>
           </>
         ) : (
           <>

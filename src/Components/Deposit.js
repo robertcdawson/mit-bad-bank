@@ -12,7 +12,7 @@ function Deposit() {
     ctx.users[ctx.users.length - 1]
     && ctx.users[ctx.users.length - 1].balance;
   const [balance, setBalance] = React.useState(currentUserBalance);
-  const submitDisabledValue = React.useRef('disabled');
+  const [disabledValue, setDisabledValue] = React.useState("disabled");
 
   function validate(field, label) {
     if (!field) {
@@ -28,36 +28,26 @@ function Deposit() {
       alert('Enter amount');
       return;
     }
-    submitDisabledValue.current = "";
     setBalance(Number(balance) + Number(amount));
     setShow(false);
   }
 
   React.useEffect(() => {
+    // For demo, update balance of last created account
     ctx.users[ctx.users.length - 1].balance = balance;
-    if (!amount) {
-      submitDisabledValue.current = "disabled";
+    if (amount !== "") {
+      setDisabledValue("");
+    } else {
+      setDisabledValue("disabled");
     }
   }, [amount, balance, ctx.users]);
 
-  function canSubmit() {
-    if (!validate(amount, 'amount')) {
-      submitDisabledValue.current = "disabled";
-    } else {
-      submitDisabledValue.current = "";
-    }
-  }
-
   function handleChange(e, setField) {
-    if (isNaN(e.currentTarget.value)) {
+    if (isNaN(e.target.value)) {
       alert("Please enter a number");
       return;
     }
-    if (!e.currentTarget.value) {
-      submitDisabledValue.current = "disabled";
-    }
-    setField(e.currentTarget.value);
-    canSubmit();
+    setField(e.target.value);
   }
 
   function clearForm() {
@@ -76,7 +66,7 @@ function Deposit() {
             <p>Balance: {balance}</p>
             Deposit Amount<br />
             <input type="input" required className="form-control" id="amount" placeholder="Enter deposit amount" value={amount} onChange={e => handleChange(e, setAmount)} /><br />
-            <button type="submit" className="btn btn-light" disabled={submitDisabledValue.current} onClick={handleCreate}>Make Deposit</button>
+            <button type="submit" className="btn btn-light" disabled={disabledValue} onClick={handleCreate}>Make Deposit</button>
           </>
         ) : (
           <>
