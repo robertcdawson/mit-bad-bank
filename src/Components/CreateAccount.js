@@ -31,15 +31,15 @@ function CreateAccount() {
 
   function handleCreate() {
     if (!validate(name, 'name')) {
-      alert('Enter name');
+      setStatus('Enter name');
       return;
     }
     if (!validate(email, 'email')) {
-      alert('Enter email');
+      setStatus('Enter email');
       return;
     }
     if (!validate(password, 'password')) {
-      alert('Enter password (at least 8 characters)');
+      setStatus('Enter password (at least 8 characters)');
       return;
     }
     // Delete initial placeholder user account

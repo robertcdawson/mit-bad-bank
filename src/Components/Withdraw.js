@@ -25,7 +25,7 @@ function Withdraw() {
 
   function handleCreate() {
     if (!validate(amount, 'amount')) {
-      alert('Enter amount');
+      setStatus('Enter amount');
       return;
     }
     if (Number(amount) <= Number(balance)) {
@@ -46,11 +46,13 @@ function Withdraw() {
   }, [amount, balance, ctx.users]);
 
   function handleChange(e, setField) {
-    if (isNaN(e.currentTarget.value)) {
-      alert("Please enter a number");
+    if (isNaN(e.target.value)) {
+      setStatus('Please enter a number');
       return;
+    } else {
+      setStatus('');
+      setField(e.target.value);
     }
-    setField(e.currentTarget.value);
   }
 
   function clearForm() {

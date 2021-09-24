@@ -25,7 +25,7 @@ function Deposit() {
 
   function handleCreate() {
     if (!validate(amount, 'amount')) {
-      alert('Enter amount');
+      setStatus('Enter amount');
       return;
     }
     setBalance(Number(balance) + Number(amount));
@@ -44,10 +44,12 @@ function Deposit() {
 
   function handleChange(e, setField) {
     if (isNaN(e.target.value)) {
-      alert("Please enter a number");
+      setStatus('Please enter a number');
       return;
+    } else {
+      setStatus('');
+      setField(e.target.value);
     }
-    setField(e.target.value);
   }
 
   function clearForm() {
