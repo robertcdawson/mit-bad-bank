@@ -18,8 +18,8 @@ function AllData() {
       <table className="table table-bordered table-striped">
         <thead>
           <tr>
-            <th scope="col">Email</th>
             <th scope="col">Name</th>
+            <th scope="col">Email</th>
             <th scope="col">Password</th>
           </tr>
         </thead>
