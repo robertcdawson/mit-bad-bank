@@ -9,6 +9,8 @@ This app presents a fictional bank without security (hence, Bad Bank) where the 
 * Withdraw money into last created account (last created for demo)
 * View all account data (minus balance as this was not a requirement)
 
+Note: For simplicity, this app uses [React Context](https://reactjs.org/docs/context.html) to maintain account information.
+
 ## View Online
 
 THis app can be viewed online at:
