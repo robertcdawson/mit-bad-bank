@@ -5,8 +5,8 @@
 This app presents a fictional bank without security (hence, Bad Bank) where the user can:
 
 * Create an account (as many as desired for this demo)
-* Deposit money into last createed account (last created for demo)
-* Withdraw money into last createed account (last created for demo)
+* Deposit money into last created account (last created for demo)
+* Withdraw money into last created account (last created for demo)
 * View all account data (minus balance as this was not a requirement)
 
 ## View Online
