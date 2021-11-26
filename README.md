@@ -2,7 +2,9 @@
 
 ## Description
 
-This app presents a fictional bank without security (hence, Bad Bank) where the user can:
+This app presents a fictional bank without security (hence, Bad Bank).
+
+## Features
 
 * Create an account (as many as desired for this demo)
 * Deposit money into last created account (last created for demo)
@@ -13,13 +15,13 @@ Note: For simplicity, this app uses [React Context](https://reactjs.org/docs/con
 
 ## View Online
 
-THis app can be viewed online at:
+This app can be viewed online at:
 
 http://bank-bank-robert-dawson.s3-website-us-west-1.amazonaws.com/#/
 
-## Getting Started
+## Installation Guidelines
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+First, download this repo using `git clone https://github.com/robertcdawson/mit-bad-bank.git`.
 
 ### Available Scripts
 
@@ -42,3 +44,13 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## Technology
+
+* React
+* Bootstrap
+* React Testing Library
+
+## License
+
+MIT
