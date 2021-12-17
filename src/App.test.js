@@ -1,8 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('Page title exists', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const pageTitleElement = screen.getByText(/Welcome to the bank/i);
+  expect(pageTitleElement).toBeInTheDocument();
+});
+
+test('Hero image exists', async () => {
+  render(<App />);
+  const heroImage = screen.getByAltText('Hero image');
+  expect(heroImage.src).toContain('bank.png');
 });
